@@ -1,4 +1,4 @@
-import { Context } from 'hono';
+import type { Context } from 'hono';
 import { generateToken } from '@/utils/jwt';
 import { LoginDto } from '@/dtos/login.dto';
 import { plainToInstance } from 'class-transformer';
@@ -23,16 +23,18 @@ class LoginController {
         return c.json({ errors }, 400);
       }
 
-      const isValidPassword = await loginServices.isValidUserPassword(loginDto.email, loginDto.password);
+      const isValidPassword = await loginServices.isValidUserPassword(
+        loginDto.email,
+        loginDto.password,
+      );
       if (!isValidPassword) {
         return c.json({ message: 'Invalid email or password' }, 401);
       }
 
       const payload = await generateToken({ email: loginDto.email });
       return c.json({ token: payload }, 200);
-
     } catch (err) {
-      console.log(err);
+      console.log(JSON.stringify(err, null, 2));
       return c.json({ message: 'Internal server error' }, 500);
     }
   }

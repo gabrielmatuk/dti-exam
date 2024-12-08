@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { Context } from 'hono'
+import type { Context } from 'hono'
 
 import userRoutes from './routes/user.routes';
 import authRoute from './routes/login.routes';

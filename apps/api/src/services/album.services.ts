@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export class AlbumService {
-  async getAllAlbums(email: string, page: number = 1, pageSize: number = 5) {
+  async getAllAlbums(email: string, page = 1, pageSize = 5) {
     const skip = (page - 1) * pageSize;
 
     const user = await prisma.user.findUnique({
@@ -16,12 +16,11 @@ export class AlbumService {
 
     const [albums, total] = await prisma.$transaction([
       prisma.album.findMany({
-        where: { user_id: user.id },
         skip,
         take: pageSize,
         include: { photos: true },
       }),
-      prisma.album.count({ where: { user_id: user.id } }),
+      prisma.album.count({}),
     ]);
 
     return { albums, total };
@@ -37,7 +36,7 @@ export class AlbumService {
     }
 
     const album = await prisma.album.findFirst({
-      where: { id, user_id: user.id },
+      where: { id },
       include: { photos: true },
     });
 
@@ -60,7 +59,7 @@ export class AlbumService {
     const newAlbum = await prisma.album.create({
       data: {
         name,
-        user_id: user.id,
+        user_id: user.id, //This is obligatory to create an album.
       },
     });
 
@@ -77,7 +76,7 @@ export class AlbumService {
     }
 
     const album = await prisma.album.findFirst({
-      where: { id, user_id: user.id },
+      where: { id },
     });
 
     if (!album) {

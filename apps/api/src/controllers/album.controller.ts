@@ -1,11 +1,10 @@
-import { Context } from 'hono';
+import type { Context } from 'hono';
 import { AlbumService } from '@/services/album.services';
-import { getEmailByJwt } from '@/utils/get-email-by-jwt'
+import { getEmailByJwt } from '@/utils/get-email-by-jwt';
 
 const albumService = new AlbumService();
 
 class AlbumController {
-
   public async listAlbums(c: Context) {
     try {
       const page = Number(c.req.query('page')) || 1;
@@ -14,20 +13,26 @@ class AlbumController {
 
       const { albums, total } = await albumService.getAllAlbums(email, page, pageSize);
 
-      return c.json({ albums, count: albums.length, total, page, pageSize, totalPages: Math.ceil(total / pageSize) });
+      return c.json({
+        albums,
+        count: albums.length,
+        total,
+        page,
+        pageSize,
+        totalPages: Math.ceil(total / pageSize),
+      });
     } catch (err) {
       console.log(err);
       return c.json({ message: 'Failed to list albums' }, 400);
     }
   }
 
-
   public async getAlbumById(c: Context) {
     try {
       const albumId = Number(c.req.param('id'));
       const email = getEmailByJwt(c);
 
-      if (isNaN(albumId)) {
+      if (Number.isNaN(albumId)) {
         return c.json({ message: 'Invalid album ID' }, 400);
       }
 
@@ -63,7 +68,7 @@ class AlbumController {
       const albumId = Number(c.req.param('id'));
       const email = getEmailByJwt(c);
 
-      if (isNaN(albumId)) {
+      if (Number.isNaN(albumId)) {
         return c.json({ message: 'Invalid album ID' }, 400);
       }
 
@@ -77,5 +82,4 @@ class AlbumController {
   }
 }
 
-
-export default new AlbumController
+export default new AlbumController();
