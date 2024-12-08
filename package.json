@@ -1,0 +1,27 @@
+{
+  "name": "dti-fullstack-project",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo run dev",
+    "lint": "turbo lint --",
+    "test": "turbo run test",
+    "format": "prettier \"**/*\" --write --ignore-unknown --loglevel error"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "eslint": "^8.5.0",
+    "eslint-config-custom": "*",
+    "lint-staged": ">=10",
+    "turbo": "^2.1.2",
+    "typescript": "^5.4.5"
+  },
+  "packageManager": "pnpm@8.15.6",
+  "engines": {
+    "node": ">=18"
+  }
+}
