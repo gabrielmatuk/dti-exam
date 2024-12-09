@@ -3,7 +3,7 @@ name: Test code - API
 on: push
 
 jobs:
-  check-format:
+  test:
     runs-on: ubuntu-latest
 
     steps:
