@@ -75,6 +75,17 @@ class UserController {
       return c.json({ message: 'Failed to update user' }, 400);
     }
   }
+
+  public async getUserByEmail(c: Context) {
+    try {
+      const email = c.req.param('email');
+      const user = await usersService.getUserByEmail(email);
+      return c.json({ user }, 200);
+    } catch (err) {
+      console.log(err);
+      return c.json({ message: 'Failed to retrieve user' }, 400);
+    }
+  }
 }
 
 export default new UserController();

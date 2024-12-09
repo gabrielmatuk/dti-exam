@@ -69,6 +69,13 @@ export class UserServices {
     });
     return user;
   }
+
+  async getUserByEmail(email: string): Promise<User | null> {
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+    return user;
+  }
 }
 
 export default new UserServices();
