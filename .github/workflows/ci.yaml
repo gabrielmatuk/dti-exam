@@ -24,5 +24,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install  
 
-      - name: Build project
-        run: pnpm run build  
+      - name: Build backend
+        run: pnpm build
+        working-directory: ./apps/api
+      
+      - name: Build frontend
+        run: pnpm build
+        working-directory: ./apps/web
