@@ -1,0 +1,26 @@
+name: Test code - API
+
+on: push
+
+jobs:
+  check-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        id: setup-node
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8  
+
+      - name: Install dependencies
+        run: pnpm install  
+
+      - name: Tests
+        run: pnpm test
