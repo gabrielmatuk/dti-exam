@@ -3,16 +3,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Edit3 } from "lucide-react"; // Ícone de lápis do Lucide
+import { Edit3 } from "lucide-react";
 import { useToast } from "@/components/hooks/use-toast";
 
-// Simulação de dados JSON de um usuário
 const userData = {
   id: 1,
   name: "Gabriel",
   email: "test@test.com",
-  password: "******", // Simulação de senha codificada
-  avatarUrl: "", // Adicione uma URL de avatar ou deixe vazio para o fallback
+  password: "******",
+  avatarUrl: "",
 };
 
 type UserType = {
@@ -29,9 +28,7 @@ export default function UserPage() {
   const [newAvatar, setNewAvatar] = useState<File | null>(null);
   const { toast } = useToast()
 
-  // Simulação de carregamento dos dados do usuário
   useEffect(() => {
-    // Normalmente você buscaria os dados de uma API, mas aqui usamos o JSON estático
     setUser(userData);
   }, []);
 
@@ -50,7 +47,6 @@ export default function UserPage() {
       variant: "default",
     })
     console.log("Informações atualizadas: ", user);
-    // Aqui você poderia enviar as informações atualizadas para uma API
   };
 
   const handleAvatarClick = () => {

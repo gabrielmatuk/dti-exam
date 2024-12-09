@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
-import { Context } from 'hono'
+import { cors } from 'hono/cors';
+import type { Context } from 'hono'
 
 import userRoutes from './routes/user.routes';
 import authRoute from './routes/login.routes';
@@ -7,6 +8,8 @@ import photoRoutes from './routes/photo.routes';
 import albumRoutes from './routes/album.routes';
 
 const app = new Hono();
+
+app.use('*', cors());
 
 app.route('api/v1', userRoutes);
 app.route('api/v1', authRoute);

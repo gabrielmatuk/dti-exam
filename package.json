@@ -13,10 +13,7 @@
     "format": "prettier \"**/*\" --write --ignore-unknown --loglevel error"
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
-    "eslint": "^8.5.0",
-    "eslint-config-custom": "*",
-    "lint-staged": ">=10",
+    "@biomejs/biome": "1.9.4",
     "turbo": "^2.1.2",
     "typescript": "^5.4.5"
   },

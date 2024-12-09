@@ -76,9 +76,10 @@ export class PhotoService {
       }
 
       const album = await prisma.album.findFirst({
-        where: { id: albumId, user_id: user.id },
+        where: {
+          id: albumId,
+        },
       });
-
       if (!album) {
         throw new Error('Album not found or user does not have access to this album');
       }

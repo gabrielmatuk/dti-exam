@@ -15,7 +15,7 @@ export function Header() {
       }}
     >
       {/* Logo ou título do site */}
-      <h1>EzBusiness</h1>
+      <h1>Exame DTI</h1>
 
       {/* Avatar + Botões de Login/Registro */}
       <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>

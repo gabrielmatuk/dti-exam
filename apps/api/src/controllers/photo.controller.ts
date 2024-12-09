@@ -1,16 +1,14 @@
+import type { Context } from 'hono';
+import { PhotoService } from '@/services/photo.services';
+import type { CustomFile } from '@/types';
+import { getEmailByJwt } from '@/utils/get-email-by-jwt';
+import { plainToInstance } from 'class-transformer';
+import { PhotoDto } from '@/dtos/photo.dto';
+import { validate } from 'class-validator';
 
-import { Context } from 'hono'
-import { PhotoService } from '@/services/photo.services'
-import { CustomFile } from '@/types'
-import { getEmailByJwt } from '@/utils/get-email-by-jwt'
-import { plainToInstance } from 'class-transformer'
-import { PhotoDto } from '@/dtos/photo.dto'
-import { validate } from 'class-validator'
-
-const photoService = new PhotoService()
+const photoService = new PhotoService();
 
 class PhotoController {
-
   public async listPhotos(c: Context) {
     try {
       const page = Number(c.req.query('page')) || 1;
@@ -19,7 +17,14 @@ class PhotoController {
 
       const { photos, total } = await photoService.getAllPhotos(page, pageSize, email);
 
-      return c.json({ photos, count: photos.length, total, page, pageSize, totalPages: Math.ceil(total / pageSize) });
+      return c.json({
+        photos,
+        count: photos.length,
+        total,
+        page,
+        pageSize,
+        totalPages: Math.ceil(total / pageSize),
+      });
     } catch (err) {
       console.log(err);
       return c.json({ message: 'Failed to list photos' }, 400);
@@ -29,7 +34,7 @@ class PhotoController {
   public async getPhotoById(c: Context) {
     try {
       const id = Number(c.req.param('id'));
-      if (isNaN(id)) {
+      if (Number.isNaN(id)) {
         return c.json({ message: 'Invalid photo ID' }, 400);
       }
       const photo = await photoService.getPhotoById(id);
@@ -44,7 +49,7 @@ class PhotoController {
   public async deletePhotoById(c: Context) {
     try {
       const photoId = Number(c.req.param('id'));
-      if (isNaN(photoId)) {
+      if (Number.isNaN(photoId)) {
         return c.json({ message: 'Invalid photo ID' }, 400);
       }
 
@@ -64,7 +69,7 @@ class PhotoController {
       }
 
       const formData = await c.req.parseBody();
-      const file: CustomFile = formData['file'] as CustomFile;
+      const file: CustomFile = formData.file as CustomFile;
       if (!file || typeof file === 'string') {
         return c.json({ message: 'File is required and must be valid' }, 400);
       }
@@ -81,11 +86,7 @@ class PhotoController {
       const buffer = Buffer.from(arrayBuffer);
 
       const email = getEmailByJwt(c);
-      const newPhoto = await photoService.createPhoto(
-        buffer,
-        file.name,
-        email,
-      );
+      const newPhoto = await photoService.createPhoto(buffer, file.name, email);
 
       return c.json({ newPhoto }, 201);
     } catch (err) {
@@ -96,17 +97,21 @@ class PhotoController {
 
   public async insertPhotoIntoAlbum(c: Context) {
     try {
-      const body = await c.req.json()
+      const body = await c.req.json();
       const email = getEmailByJwt(c);
 
-      const photoDto = plainToInstance(PhotoDto, body)
+      const photoDto = plainToInstance(PhotoDto, body);
 
       const errors = await validate(photoDto);
       if (errors.length > 0) {
         return c.json({ errors }, 400);
       }
 
-      const photo = await photoService.insertPhotoIntoAlbum(photoDto.photoId, photoDto.albumId, email);
+      const photo = await photoService.insertPhotoIntoAlbum(
+        photoDto.photoId,
+        photoDto.albumId,
+        email,
+      );
 
       return c.json({ photo });
     } catch (err) {
@@ -116,4 +121,4 @@ class PhotoController {
   }
 }
 
-export default new PhotoController
+export default new PhotoController();

@@ -1,4 +1,4 @@
-import { Context, MiddlewareHandler } from 'hono';
+import type { Context, MiddlewareHandler } from 'hono';
 import { verifyToken } from '../utils/jwt';
 
 export const authMiddleware: MiddlewareHandler = async (ctx: Context, next) => {
@@ -10,11 +10,9 @@ export const authMiddleware: MiddlewareHandler = async (ctx: Context, next) => {
   const token = authHeader.replace('Bearer ', '');
   try {
     const decoded = verifyToken(token);
-    console.log(decoded);
     ctx.set('login', decoded);
     await next();
   } catch (error) {
-
     return ctx.json({ message: 'Token invalid or expired' }, 403);
   }
 };
