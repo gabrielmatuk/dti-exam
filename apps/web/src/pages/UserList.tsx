@@ -34,7 +34,6 @@ export default function UsersList() {
           <TableRow>
             <TableHead className="w-[100px]">Nome</TableHead>
             <TableHead>Email</TableHead>
-            <TableHead>Senha</TableHead>
             <TableHead className="text-right">Ativo</TableHead>
           </TableRow>
         </TableHeader>
