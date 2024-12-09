@@ -8,103 +8,24 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-const usersData = [
-  {
-    id: 1,
-    name: "Gabriel",
-    email: "test@test.com",
-    password: "******", // Simulação de senha codificada
-    isActive: true,
-  },
-  {
-    id: 2,
-    name: "João",
-    email: "joao@test.com",
-    password: "******", // Simulação de senha codificada
-    isActive: false,
-  }, {
-    id: 1,
-    name: "Gabriel",
-    email: "test@test.com",
-    password: "******", // Simulação de senha codificada
-    isActive: true,
-  },
-  {
-    id: 2,
-    name: "João",
-    email: "joao@test.com",
-    password: "******", // Simulação de senha codificada
-    isActive: false,
-  }, {
-    id: 1,
-    name: "Gabriel",
-    email: "test@test.com",
-    password: "******", // Simulação de senha codificada
-    isActive: true,
-  },
-  {
-    id: 2,
-    name: "João",
-    email: "joao@test.com",
-    password: "******", // Simulação de senha codificada
-    isActive: false,
-  }, {
-    id: 1,
-    name: "Gabriel",
-    email: "test@test.com",
-    password: "******", // Simulação de senha codificada
-    isActive: true,
-  },
-  {
-    id: 2,
-    name: "João",
-    email: "joao@test.com",
-    password: "******", // Simulação de senha codificada
-    isActive: false,
-  }, {
-    id: 1,
-    name: "Gabriel",
-    email: "test@test.com",
-    password: "******", // Simulação de senha codificada
-    isActive: true,
-  },
-  {
-    id: 2,
-    name: "João",
-    email: "joao@test.com",
-    password: "******", // Simulação de senha codificada
-    isActive: false,
-  }, {
-    id: 1,
-    name: "Gabriel",
-    email: "test@test.com",
-    password: "******", // Simulação de senha codificada
-    isActive: true,
-  },
-  {
-    id: 2,
-    name: "João",
-    email: "joao@test.com",
-    password: "******", // Simulação de senha codificada
-    isActive: false,
-  }, {
-    id: 1,
-    name: "Gabriel",
-    email: "test@test.com",
-    password: "******", // Simulação de senha codificada
-    isActive: true,
-  },
-  {
-    id: 2,
-    name: "João",
-    email: "joao@test.com",
-    password: "******", // Simulação de senha codificada
-    isActive: false,
-  },
-  // Outros usuários...
-];
+import React from 'react';
+import { ApiService } from '@/api'
+import { User } from '@/types';
+
+const apiService = new ApiService();
 
 export default function UsersList() {
+  const [usersData, setUsersData] = React.useState<User[]>([]);
+
+
+  async function getUsers() {
+    const users = await apiService.getUsers();
+    setUsersData(users);
+  }
+
+  React.useEffect(() => {
+    getUsers();
+  }, []);
   return (
     <div style={{ padding: "20px", display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
 
