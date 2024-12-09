@@ -4,6 +4,7 @@ import { authMiddleware } from '@/middlewares/auth.middleware';
 const userRoutes = new Hono();
 
 userRoutes.get('/users', authMiddleware, UserController.listUsers);
+userRoutes.get('/user/:email', authMiddleware, UserController.getUserByEmail);
 userRoutes.post('/user', UserController.createUser);
 userRoutes.delete('/user/:email', authMiddleware, UserController.deleteUser);
 userRoutes.put('/user/:email', authMiddleware, UserController.updateUser);
