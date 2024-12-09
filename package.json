@@ -9,8 +9,8 @@
     "build": "turbo build",
     "dev": "turbo run dev",
     "lint": "turbo lint --",
-    "test": "turbo run test",
-    "format": "prettier \"**/*\" --write --ignore-unknown --loglevel error"
+    "format": "turbo format",
+    "test": "turbo run test"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
