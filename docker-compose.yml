@@ -1,18 +1,6 @@
 version: '3.8'
 
 services:
-  # api:
-  #   container_name: 'dti-api'
-  #   build:
-  #     context: .
-  #     dockerfile: ./apps/api/Dockerfile
-  #   ports:
-  #     - '3000:3000'
-  #   environment:
-  #     DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
-  #   networks:
-  #     - dti-network
-
   db:
     container_name: 'dti-postgres'
     image: 'postgres:latest'

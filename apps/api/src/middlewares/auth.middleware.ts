@@ -1,4 +1,4 @@
-import { Context, MiddlewareHandler } from 'hono';
+import type { Context, MiddlewareHandler } from 'hono';
 import { verifyToken } from '../utils/jwt';
 
 export const authMiddleware: MiddlewareHandler = async (ctx: Context, next) => {
